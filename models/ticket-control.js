@@ -52,6 +52,25 @@ class TicketControl {
     this.guardarDB();
     return "Ticket" + ticket.numero;
   }
+
+  atenderTicket(escritorio) {
+    if (this.tickets.length === 0) {
+      return null;
+    }
+
+    const ticket = this.tickets[0];
+    this.tickets.shift();
+
+    ticket.escritorio = escritorio;
+
+    this.ultimos4.unshift(ticket);
+
+    if (this.ultimos4.length > 4) {
+      this.ultimos4.splice(-1, 1);
+    }
+    this.guardarDB();
+    return ticket;
+  }
 }
 
 module.exports = TicketControl;
